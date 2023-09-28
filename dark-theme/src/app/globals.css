@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.Typewriter__cursor {
+  color: #3c7fff;
+  font-weight: 700;
+  font-family: "Figtree", sans-serif !important;
+  font-size: 1.5rem !important;
+}
+
+.Typewriter__wrapper {
+  color: #3c7fff;
+  font-weight: 700;
+  font-size: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .Typewriter__wrapper {
+    font-size: 2.5rem !important;
+  }
+  .Typewriter__cursor {
+    font-size: 2.5rem !important;
+  }
+}
