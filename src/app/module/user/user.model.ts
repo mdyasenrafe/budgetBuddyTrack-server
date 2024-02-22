@@ -1,7 +1,7 @@
-import { Schema, model, Model } from "mongoose";
-import { UserType } from "./user.interface";
+import { Schema, model } from "mongoose";
+import { UserDataType } from "./user.interface";
 
-const userSchema = new Schema<UserType>({
+const UserSchema = new Schema<UserDataType>({
   name: {
     type: String,
     required: [true, "Name is required"],
@@ -14,16 +14,15 @@ const userSchema = new Schema<UserType>({
   status: {
     type: String,
     enum: ["active", "inactive"],
+    default: "active",
   },
-  profilePicture: {
-    type: String,
-  },
+  profilePicture: String,
   password: {
     type: String,
-    required: true,
+    required: [true, "Password is required"],
   },
 });
 
-const UserModel = model<UserType>("user", userSchema);
+const User = model<UserDataType>("User", UserSchema);
 
-export default UserModel;
+export default User;

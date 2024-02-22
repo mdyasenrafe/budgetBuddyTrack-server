@@ -1,7 +1,9 @@
-import { UserType } from "./user.interface";
-import UserModel from "./user.model";
+import { UserDataType } from "./user.interface";
+import User from "./user.model";
 
-export const signupUserToDB = async (payload: UserType): Promise<UserType> => {
-  const user = await UserModel.create(payload);
-  return user;
+export const createUser = async (
+  userData: UserDataType
+): Promise<UserDataType> => {
+  const newUser = await User.create(userData);
+  return newUser;
 };
