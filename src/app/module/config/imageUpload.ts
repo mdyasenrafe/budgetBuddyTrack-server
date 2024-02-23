@@ -1,34 +1,34 @@
-import express, { Application, Request, Response } from "express";
+import express, { Request, Response } from "express";
 const imgbbUploader = require("imgbb-uploader");
 
-const ImageUploadrouter = express.Router();
+const imageUploadRouter = express.Router();
 
-ImageUploadrouter.post("/upload", async (req: Request, res: Response) => {
+imageUploadRouter.post("/upload", async (req: Request, res: Response) => {
   const { url } = req.body;
-  if (url) {
-    const options = {
-      apiKey: process.env.IMGBB_API_KEY,
-      base64string: url,
-    };
-    imgbbUploader(options)
-      .then((response) => {
-        console.log(response);
-        res.status(200).json({
-          error: false,
-          message: "Image uploaded successfully",
-          link: response?.display_url,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(400).json({
-          error: true,
-          message: "Image upload failed",
-        });
-      });
-  } else {
-    res.status(400).json({ error: true, message: "Please enter url" });
+  if (!url) {
+    return res.status(400).json({ error: true, message: "URL is required." });
+  }
+
+  const uploadOptions = {
+    apiKey: process.env.IMGBB_API_KEY,
+    base64string: url,
+  };
+
+  try {
+    const uploadResponse = await imgbbUploader(uploadOptions);
+    console.log(uploadResponse);
+    res.status(200).json({
+      error: false,
+      message: "Image uploaded successfully.",
+      link: uploadResponse?.display_url,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: true,
+      message: "Failed to upload image.",
+    });
   }
 });
 
-export default ImageUploadrouter;
+export default imageUploadRouter;
