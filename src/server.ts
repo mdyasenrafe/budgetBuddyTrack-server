@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import app from "./app";
+import app from "./index";
 
 const port: number = 5001;
 
