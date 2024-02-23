@@ -1,6 +1,7 @@
+import { Request, Response } from "express";
 import { createUser } from "./user.service";
 
-export const registerUser = async (req, res) => {
+export const registerUser = async (req: Request, res: Response) => {
   try {
     const registrationData = req.body;
     const newUser = await createUser(registrationData);
@@ -16,11 +17,9 @@ export const registerUser = async (req, res) => {
     });
   }
 };
-
-export const testingRoute = async (req, res) => {
-  return res.status(200).json({
+export const testingUser = async (req: Request, res: Response) => {
+  return res.status(201).json({
     status: "Success",
-
     message: "User registered successfully.",
   });
 };

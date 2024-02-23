@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const app = require("./index");
+import mongoose from "mongoose";
+import app from "./app";
 
-const port = 5001;
+const port: number = 5001;
 
 require("dotenv").config();
 
