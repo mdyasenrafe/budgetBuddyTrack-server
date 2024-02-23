@@ -3,23 +3,28 @@ import { createUser, loginUser } from "./user.service";
 import { UserDataType } from "./user.interface";
 import bcrypt from "bcrypt";
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const registrationData: UserDataType = req.body;
-    const { email, password, name } = req.body;
+    const { email, password, name }: UserDataType = req.body;
+
     if (email && password && name) {
-      let hashedPassword = await bcrypt?.hash(password, 10);
-      registrationData["password"] = hashedPassword;
-      const newUser = await createUser(registrationData);
+      const hashedPassword = await bcrypt.hash(password, 10);
+      req.body["password"] = hashedPassword;
+      const newUser = await createUser(req.body);
+
       return res.status(201).json({
         error: false,
         data: newUser,
         message: "User registered successfully.",
       });
     }
+
     return res.status(400).json({
       error: true,
-      message: "Please provide an email address and password",
+      message: "Please provide an email address, password, and name.",
     });
   } catch (error) {
     return res.status(500).json({
@@ -28,42 +33,44 @@ export const registerUser = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const signInUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const signInData: UserDataType = req.body;
-    const { email, password } = signInData;
-    console.log(password);
+    const { email, password }: UserDataType = req.body;
+
     if (!email || !password) {
       return res.status(400).json({
         error: true,
-        message: "Please provide an email address.",
+        message: "Please provide an email address and password.",
       });
     }
 
-    const user = await loginUser(signInData);
+    const user = await loginUser(email);
 
     if (!user?.email) {
       return res.status(401).json({
         error: true,
         data: user,
-        message: "user didn't find.",
+        message: "User not found.",
       });
     }
-    const ValidPassword = await bcrypt.compare(password, user?.password);
 
-    if (ValidPassword) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
       return res.status(200).json({
         error: false,
         data: user,
         message: "User signed in successfully.",
       });
     }
+
     return res.status(401).json({
       error: true,
-      message: "password didn't match",
+      message: "Password did not match.",
     });
   } catch (error) {
     return res.status(500).json({

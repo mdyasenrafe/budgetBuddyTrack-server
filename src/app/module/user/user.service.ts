@@ -9,10 +9,10 @@ export const createUser = async (
 };
 
 export const loginUser = async (
-  userData: UserDataType
+  email: string
 ): Promise<UserDataType | null> => {
   const user = await User.findOne({
-    email: userData.email,
+    email: email,
   });
 
   return user || null;
