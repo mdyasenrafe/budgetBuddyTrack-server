@@ -5,6 +5,7 @@ const app: Application = express();
 
 // route
 import UserRoute from "./app/module/user/user.route";
+import ImageUploadrouter from "./app/module/config/imageUpload";
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/auth", UserRoute);
-
+app.use("/", ImageUploadrouter);
 // Undefined Route Implement
 app.use((req: Request, res: Response, next) => {
   res
