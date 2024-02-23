@@ -7,3 +7,13 @@ export const createUser = async (
   const newUser = await User.create(userData);
   return newUser;
 };
+
+export const loginUser = async (
+  userData: UserDataType
+): Promise<UserDataType | null> => {
+  const user = await User.findOne({
+    email: userData.email,
+  });
+
+  return user || null;
+};
