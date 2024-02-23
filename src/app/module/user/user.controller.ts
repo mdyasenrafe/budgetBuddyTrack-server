@@ -17,3 +17,9 @@ export const registerUser = async (req: Request, res: Response) => {
     });
   }
 };
+export const testingUser = async (req: Request, res: Response) => {
+  return res.status(201).json({
+    status: "Success",
+    message: "User registered successfully.",
+  });
+};
