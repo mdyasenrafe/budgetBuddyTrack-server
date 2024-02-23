@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World from typescript");
+  res.send("Hello World");
 });
 
 app.use("/auth", UserRoute);
