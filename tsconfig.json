@@ -7,7 +7,7 @@
   },
   "include": [
     "src/**/*.ts", // adjust this as needed for your source files
-    "server.ts"
+    "src/app/module/user/server.ts"
   ],
   "exclude": ["node_modules"]
 }
