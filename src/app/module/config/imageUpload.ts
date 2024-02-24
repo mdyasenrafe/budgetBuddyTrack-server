@@ -23,7 +23,8 @@ imageUploadRouter.post("/upload", async (req: Request, res: Response) => {
       link: uploadResponse?.display_url,
     });
   } catch (error) {
-    console.error(error);
+    console.log("process.env.IMGBB_API_KEY", process.env.IMGBB_API_KEY);
+    console.log(error);
     res.status(500).json({
       error: true,
       message: "Failed to upload image.",
