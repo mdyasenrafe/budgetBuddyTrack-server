@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { createUser, loginUser } from "./user.service";
 import { UserDataType } from "./user.interface";
 import bcrypt from "bcrypt";
+import generateToken from "../../config/GenerateToken";
 
 export const registerUser = async (
   req: Request,
@@ -53,7 +54,6 @@ export const signInUser = async (
     if (!user?.email) {
       return res.status(401).json({
         error: true,
-        data: user,
         message: "User not found.",
       });
     }
@@ -61,10 +61,12 @@ export const signInUser = async (
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
+      const token = generateToken(user.email, user?._id, user.name);
       return res.status(200).json({
         error: false,
         data: user,
         message: "User signed in successfully.",
+        token: token,
       });
     }
 
