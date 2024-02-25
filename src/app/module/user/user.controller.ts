@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createUser, loginUser } from "./user.service";
+import { createUser, loginUser, updatePassword } from "./user.service";
 import { UserDataType } from "./user.interface";
 import bcrypt from "bcrypt";
 import generateToken from "../../config/GenerateToken";
@@ -23,7 +23,6 @@ export const registerUser = async (
         token: token,
       });
     }
-
     return res.status(400).json({
       error: true,
       message: "Please provide an email address, password, and name.",
@@ -98,6 +97,54 @@ export const getUserInfoFromToken = async (
       error: false,
       data: user,
       message: "User information retrieved successfully.",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: `Error retrieving user information: ${error.message}`,
+    });
+  }
+};
+export const changePassword = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { email } = req.user;
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+    if (currentPassword && newPassword && confirmNewPassword) {
+      if (newPassword == confirmNewPassword) {
+        const user = await loginUser(email);
+        if (!user) {
+          return res.status(404).json({
+            error: true,
+            message: "User not found.",
+          });
+        }
+        const isPasswordValid = await bcrypt.compare(
+          currentPassword,
+          user.password
+        );
+        if (isPasswordValid) {
+          const hashedPassword = await bcrypt.hash(confirmNewPassword, 10);
+          await updatePassword(email, hashedPassword);
+          return res.status(200).json({
+            error: false,
+            data: user,
+            message: "User password changed in successfully.",
+          });
+        }
+      } else {
+        return res.status(400).json({
+          error: true,
+          message: "Password should be matched",
+        });
+      }
+    }
+    return res.status(400).json({
+      error: true,
+      message:
+        "Please provide an current password, new password, confirm new password",
     });
   } catch (error) {
     return res.status(500).json({

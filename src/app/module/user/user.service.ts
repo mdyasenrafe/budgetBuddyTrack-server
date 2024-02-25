@@ -17,3 +17,21 @@ export const loginUser = async (
 
   return user || null;
 };
+
+export const updatePassword = async (
+  email: string,
+  currentPassword: string
+) => {
+  const user = await User.updateOne(
+    {
+      email: email,
+    },
+    {
+      $set: {
+        password: currentPassword,
+      },
+    }
+  );
+
+  return user || null;
+};
