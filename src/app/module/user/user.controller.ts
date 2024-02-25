@@ -15,11 +15,12 @@ export const registerUser = async (
       const hashedPassword = await bcrypt.hash(password, 10);
       req.body["password"] = hashedPassword;
       const newUser = await createUser(req.body);
-
+      const token = generateToken(email, newUser?._id, name);
       return res.status(201).json({
         error: false,
         data: newUser,
         message: "User registered successfully.",
+        token: token,
       });
     }
 
