@@ -49,7 +49,6 @@ export const signInUser = async (
         message: "Please provide an email address and password.",
       });
     }
-
     const user = await loginUser(email);
 
     if (!user?.email) {
@@ -58,7 +57,6 @@ export const signInUser = async (
         message: "User not found.",
       });
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
@@ -70,10 +68,36 @@ export const signInUser = async (
         token: token,
       });
     }
-
     return res.status(401).json({
       error: true,
       message: "Password did not match.",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: `Sign in failed: ${error.message}`,
+    });
+  }
+};
+
+export const userInfoFromToken = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id, email } = req;
+    const user = await loginUser(email);
+
+    if (!user?.email) {
+      return res.status(401).json({
+        error: true,
+        message: "User not found.",
+      });
+    }
+    return res.status(200).json({
+      error: false,
+      data: user,
+      message: "User signed in successfully.",
     });
   } catch (error) {
     return res.status(500).json({
