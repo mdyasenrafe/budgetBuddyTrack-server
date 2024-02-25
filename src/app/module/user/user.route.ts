@@ -1,11 +1,15 @@
 import express from "express";
-import { registerUser, signInUser, userInfoFromToken } from "./user.controller";
-import checkLogin from "../../config/CheckLogin";
+import {
+  getUserInfoFromToken,
+  registerUser,
+  signInUser,
+} from "./user.controller";
+import { verifyAuthToken } from "../../config/verifyAuthToken";
 
 const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/signin", signInUser);
-userRouter.get("/userInfoFromToken", checkLogin, userInfoFromToken);
+userRouter.get("/user-info", verifyAuthToken, getUserInfoFromToken);
 
 export default userRouter;

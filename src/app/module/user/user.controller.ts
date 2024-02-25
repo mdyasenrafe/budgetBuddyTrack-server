@@ -80,16 +80,16 @@ export const signInUser = async (
   }
 };
 
-export const userInfoFromToken = async (
+export const getUserInfoFromToken = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { id, email } = req;
+    const { email } = req.user;
     const user = await loginUser(email);
 
-    if (!user?.email) {
-      return res.status(401).json({
+    if (!user) {
+      return res.status(404).json({
         error: true,
         message: "User not found.",
       });
@@ -97,12 +97,12 @@ export const userInfoFromToken = async (
     return res.status(200).json({
       error: false,
       data: user,
-      message: "User signed in successfully.",
+      message: "User information retrieved successfully.",
     });
   } catch (error) {
     return res.status(500).json({
       error: true,
-      message: `Sign in failed: ${error.message}`,
+      message: `Error retrieving user information: ${error.message}`,
     });
   }
 };
