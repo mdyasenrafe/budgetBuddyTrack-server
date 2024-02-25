@@ -20,18 +20,12 @@ export const loginUser = async (
 
 export const updatePassword = async (
   email: string,
-  currentPassword: string
-) => {
-  const user = await User.updateOne(
-    {
-      email: email,
-    },
-    {
-      $set: {
-        password: currentPassword,
-      },
-    }
+  newPassword: string
+): Promise<any> => {
+  const updateResult = await User.updateOne(
+    { email },
+    { $set: { password: newPassword } }
   );
 
-  return user || null;
+  return updateResult || null;
 };

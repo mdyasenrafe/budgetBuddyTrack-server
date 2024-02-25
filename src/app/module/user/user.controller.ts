@@ -105,51 +105,66 @@ export const getUserInfoFromToken = async (
     });
   }
 };
-export const changePassword = async (
+export const updateUserPassword = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const { email } = req.user;
-    const { currentPassword, newPassword, confirmNewPassword } = req.body;
-    if (currentPassword && newPassword && confirmNewPassword) {
-      if (newPassword == confirmNewPassword) {
-        const user = await loginUser(email);
-        if (!user) {
-          return res.status(404).json({
-            error: true,
-            message: "User not found.",
-          });
-        }
-        const isPasswordValid = await bcrypt.compare(
-          currentPassword,
-          user.password
-        );
-        if (isPasswordValid) {
-          const hashedPassword = await bcrypt.hash(confirmNewPassword, 10);
-          await updatePassword(email, hashedPassword);
-          return res.status(200).json({
-            error: false,
-            data: user,
-            message: "User password changed in successfully.",
-          });
-        }
-      } else {
-        return res.status(400).json({
-          error: true,
-          message: "Password should be matched",
-        });
-      }
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return res.status(400).json({
+        error: true,
+        message:
+          "Current password, new password, and password confirmation are required.",
+      });
     }
-    return res.status(400).json({
-      error: true,
-      message:
-        "Please provide an current password, new password, confirm new password",
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        error: true,
+        message: "New password and password confirmation do not match.",
+      });
+    }
+
+    const user = await loginUser(email);
+    if (!user) {
+      return res.status(404).json({
+        error: true,
+        message: "User not found.",
+      });
+    }
+
+    if (newPassword === currentPassword) {
+      return res.status(400).json({
+        error: true,
+        message:
+          "The new password cannot be the same as the current password. Please choose a different password.",
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!isValidPassword) {
+      return res.status(401).json({
+        error: true,
+        message: "Invalid current password.",
+      });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await updatePassword(email, hashedNewPassword);
+
+    res.status(200).json({
+      error: false,
+      message: "Password successfully updated.",
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       error: true,
-      message: `Error retrieving user information: ${error.message}`,
+      message: `Failed to update password: ${error.message}`,
     });
   }
 };
