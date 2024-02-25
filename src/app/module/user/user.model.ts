@@ -21,6 +21,11 @@ const UserSchema = new Schema<UserDataType>({
     type: String,
     required: [true, "Password is required"],
   },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
 });
 
 const User = model<UserDataType>("User", UserSchema);

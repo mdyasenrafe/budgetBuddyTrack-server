@@ -6,7 +6,7 @@ const app: Application = express();
 
 // Routes
 import userRoute from "./app/module/user/user.route";
-import imageUploadRouter from "./app/module/config/imageUpload";
+import imageUploadRouter from "./app/config/imageUpload";
 
 // Middleware
 app.use(cors());
