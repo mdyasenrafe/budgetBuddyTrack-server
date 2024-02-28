@@ -1,8 +1,8 @@
 import express from "express";
-import { getCategory } from "./category.cotroller";
+import { fetchCategories } from "./category.cotroller";
 
 const categoryRoute = express.Router();
 
-categoryRoute.get("/get-category", getCategory);
+categoryRoute.get("/categories", fetchCategories);
 
 export default categoryRoute;

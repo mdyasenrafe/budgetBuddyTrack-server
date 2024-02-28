@@ -1,8 +1,7 @@
-import { CategoryDataType } from "./category.interface";
-import Category from "./category.model";
+import { ICategory } from "./category.interface";
+import CategoryModel from "./category.model";
 
-export const getCategoryDb = async (): Promise<CategoryDataType[]> => {
-  const categories = await Category.find();
-
+export const fetchCategoriesFromDB = async (): Promise<ICategory[]> => {
+  const categories = await CategoryModel.find();
   return categories;
 };

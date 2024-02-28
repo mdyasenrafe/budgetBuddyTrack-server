@@ -1,22 +1,11 @@
 import { Schema, model } from "mongoose";
-import { CategoryDataType } from "./category.interface";
-import { type } from "os";
+import { ICategory } from "./category.interface";
 
-const CategorySchema = new Schema<CategoryDataType>({
-  key: {
-    type: String,
-    required: true,
-  },
-  value: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    enum: ["income", "expense"],
-    required: true,
-  },
+const CategorySchema = new Schema<ICategory>({
+  key: { type: String, required: true },
+  value: { type: String, required: true },
+  type: { type: String, enum: ["income", "expense"], required: true },
 });
 
-const Category = model<CategoryDataType>("categories", CategorySchema);
-export default Category;
+const CategoryModel = model<ICategory>("Category", CategorySchema);
+export default CategoryModel;
