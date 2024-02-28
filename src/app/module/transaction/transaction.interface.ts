@@ -1,5 +1,3 @@
-import { Date } from "mongoose";
-
 export interface TransactionDataType {
   userId: Object;
   category: string;
