@@ -1,5 +1,5 @@
 export interface ICategory {
-  key: string;
+  label: string;
   value: string;
   type: "expense" | "income";
 }
