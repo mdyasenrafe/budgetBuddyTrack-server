@@ -6,9 +6,9 @@ const app: Application = express();
 
 // Routes
 import userRoute from "./app/module/user/user.route";
-
 import imageUploadRouter from "./app/config/imageUpload";
 import categoryRoute from "./app/module/category/category.route";
+import transactionRoute from "./app/module/transaction/transaction.route";
 
 // Middleware
 app.use(cors());
@@ -28,6 +28,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/auth", userRoute);
 app.use("/category", categoryRoute);
 app.use("/image", imageUploadRouter);
+app.use("/transaction", transactionRoute);
 
 // Undefined Route Handling
 app.use((req: Request, res: Response) => {
