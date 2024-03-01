@@ -22,3 +22,16 @@ export const updateBudgetFromDb = async (userId: string) => {
 
   return budget;
 };
+
+// Service for creating a budget
+export const createBudget = async (budgetData) => {
+  const budget = new BudgetModel(budgetData);
+  await budget.save();
+  return budget;
+};
+
+// Service for getting a budget by userId
+export const getBudgetByUserId = async (userId) => {
+  const budget = await BudgetModel.findOne({ userId });
+  return budget;
+};

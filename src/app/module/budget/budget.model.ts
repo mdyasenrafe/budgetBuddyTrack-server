@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
-
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const budgetTrackerSchema = new mongoose.Schema({
   userId: {
