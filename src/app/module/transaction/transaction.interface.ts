@@ -1,6 +1,6 @@
 export interface TransactionDataType {
   userId: Object;
-  category: string;
+  category: Object;
   amount: number;
   description: string;
   type: "income" | "expense";

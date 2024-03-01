@@ -8,7 +8,8 @@ const TransactionSchema = new Schema<TransactionDataType>({
     required: [true, "userId is required"],
   },
   category: {
-    type: String,
+    ref: "Category",
+    type: Schema.Types.ObjectId,
     required: [true, "Category is required"],
   },
   description: {
