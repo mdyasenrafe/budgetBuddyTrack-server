@@ -1,4 +1,4 @@
-export interface CardDataType {
+export interface ICardData {
   userId: object;
   totalIncome: number;
   totalExpense: number;

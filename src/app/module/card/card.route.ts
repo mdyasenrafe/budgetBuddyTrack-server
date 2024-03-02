@@ -1,10 +1,10 @@
 import express from "express";
 import { verifyAuthToken } from "../../config/verifyAuthToken";
-import { CreateCard, GetCard } from "./card.controller";
+import { createCard, getCardDetails } from "./card.controller";
 
-const CardRouter = express.Router();
+const cardRouter = express.Router();
 
-CardRouter.post("/create-card", verifyAuthToken, CreateCard);
-CardRouter.get("/get-card", verifyAuthToken, GetCard);
+cardRouter.post("/create-card", verifyAuthToken, createCard);
+cardRouter.get("/get-card", verifyAuthToken, getCardDetails);
 
-export default CardRouter;
+export default cardRouter;

@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
-import { CardDataType } from "./card.interface";
-import { CreateCardFromDB, GetCardFromDB } from "./card.service";
+import { ICardData } from "./card.interface";
+import { createCardInDB, getCardDetailsFromDB } from "./card.service";
 
-export const CreateCard = async (req: Request, res: Response) => {
+export const createCard = async (req: Request, res: Response) => {
   try {
-    const bodyData: CardDataType = req.body;
-    const newCard = await CreateCardFromDB(bodyData);
-    console.log("new card =>", newCard);
-    return res.status(200).json({
+    const cardData: ICardData = req.body;
+    const newCard = await createCardInDB(cardData);
+    return res.status(201).json({
       error: false,
       data: newCard,
-      message: "Create card sucesfully",
+      message: "Card created successfully.",
     });
   } catch (error) {
     res.status(500).json({
@@ -20,21 +19,20 @@ export const CreateCard = async (req: Request, res: Response) => {
   }
 };
 
-export const GetCard = async (req: Request, res: Response) => {
+export const getCardDetails = async (req: Request, res: Response) => {
   try {
-    const { id } = req.user;
+    const userId = req.user.id; // Adjusted according to the comment
 
-    const cardInfo = await GetCardFromDB(id);
-    console.log("new card =>", cardInfo);
+    const cardInfo = await getCardDetailsFromDB(userId);
     return res.status(200).json({
       error: false,
       data: cardInfo,
-      message: "Create card sucesfully",
+      message: "Card details fetched successfully.",
     });
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: `Failed to get card: ${error.message}`,
+      message: `Failed to fetch card details: ${error.message}`,
     });
   }
 };

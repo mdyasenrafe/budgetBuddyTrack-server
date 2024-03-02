@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { CardDataType } from "./card.interface";
+import { ICardData } from "./card.interface";
 
-const cardOverViewSchema = new Schema<CardDataType>({
+const cardOverViewSchema = new Schema<ICardData>({
   userId: {
     ref: "User",
     type: Schema.Types.ObjectId,
@@ -23,6 +23,6 @@ const cardOverViewSchema = new Schema<CardDataType>({
 });
 
 // Create the model from the schema
-const CardModel = model<CardDataType>("CardOverview", cardOverViewSchema);
+const CardModel = model<ICardData>("CardOverview", cardOverViewSchema);
 
 export default CardModel;
