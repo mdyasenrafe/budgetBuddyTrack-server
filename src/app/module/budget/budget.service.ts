@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import BudgetModel from "./budget.model";
 import { TransactionDataType } from "../transaction/transaction.interface";
+import { BudgetDataType } from "./budget.interface";
 
 export const updateBudgetFromDb = async (body: TransactionDataType) => {
   const { userId, category, amount } = body;
@@ -23,9 +24,16 @@ export const updateBudgetFromDb = async (body: TransactionDataType) => {
 };
 
 // Service for creating a budget
-export const createBudget = async (budgetData) => {
-  const budget = new BudgetModel(budgetData);
-  await budget.save();
+export const createBudget = async (budgetData: BudgetDataType) => {
+  const { userId, category } = budgetData;
+  const query = {
+    userId,
+    category,
+  };
+  const update = { $set: budgetData };
+  const options = { upsert: true };
+
+  const budget = await BudgetModel.updateOne(query, update, options);
   return budget;
 };
 
