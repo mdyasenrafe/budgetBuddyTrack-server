@@ -5,7 +5,7 @@ import * as BudgetService from "./budget.service";
 export const createBudget = async (req: Request, res: Response) => {
   try {
     const budget = await BudgetService.createBudget(req.body);
-    res.status(201).json(budget);
+    res.status(200).json(budget);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
