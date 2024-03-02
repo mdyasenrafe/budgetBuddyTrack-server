@@ -6,6 +6,7 @@ const cardOverViewSchema = new Schema<CardDataType>({
     ref: "User",
     type: Schema.Types.ObjectId,
     required: [true, "userId is required"],
+    unique: [true, "Already exists"],
   },
   totalBalance: {
     type: Number,

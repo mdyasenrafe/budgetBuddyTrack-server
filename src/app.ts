@@ -10,6 +10,7 @@ import imageUploadRouter from "./app/config/imageUpload";
 import categoryRoute from "./app/module/category/category.route";
 import transactionRoute from "./app/module/transaction/transaction.route";
 import budgetRoute from "./app/module/budget/budget.route";
+import CardRoute from "./app/module/card/card.route";
 
 // Middleware
 app.use(cors());
@@ -31,6 +32,7 @@ app.use("/category", categoryRoute);
 app.use("/image", imageUploadRouter);
 app.use("/transaction", transactionRoute);
 app.use("/budget", budgetRoute);
+app.use("/card", CardRoute);
 
 // Undefined Route Handling
 app.use((req: Request, res: Response) => {
