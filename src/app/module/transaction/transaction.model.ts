@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { TransactionDataType } from "./transaction.interface";
+import { ITransaction } from "./transaction.interface";
 
-const TransactionSchema = new Schema<TransactionDataType>({
+const TransactionSchema = new Schema<ITransaction>({
   userId: {
     ref: "User",
     type: Schema.Types.ObjectId,
@@ -34,9 +34,6 @@ const TransactionSchema = new Schema<TransactionDataType>({
   },
 });
 
-const TransactionModel = model<TransactionDataType>(
-  "Transaction",
-  TransactionSchema
-);
+const TransactionModel = model<ITransaction>("Transaction", TransactionSchema);
 
 export default TransactionModel;
