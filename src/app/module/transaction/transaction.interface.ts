@@ -1,4 +1,4 @@
-export interface TransactionDataType {
+export interface ITransaction {
   userId: Object;
   category: Object;
   amount: number;

@@ -1,16 +1,16 @@
-import { TransactionDataType } from "./transaction.interface";
+import { ITransaction } from "./transaction.interface";
 import TransactionModel from "./transaction.model";
 
-export const addTransaction = async (
-  body: TransactionDataType
-): Promise<TransactionDataType> => {
+export const createExpenseTransaction = async (
+  body: ITransaction
+): Promise<ITransaction> => {
   const transaction = await TransactionModel.create(body);
   return transaction;
 };
 
-export const getTransctionHistory = async (
-  id: string
-): Promise<TransactionDataType[] | null> => {
-  const transaction = await TransactionModel.find({ userId: id });
-  return transaction;
+export const fetchTransactionHistory = async (
+  userId: string
+): Promise<ITransaction[] | null> => {
+  const transactions = await TransactionModel.find({ userId });
+  return transactions;
 };

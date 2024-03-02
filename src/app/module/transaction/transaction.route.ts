@@ -1,13 +1,9 @@
 import express from "express";
 import { verifyAuthToken } from "../../config/verifyAuthToken";
-import { addExpensee, transctionHistory } from "./transaction.controller";
-const transactionRouter = express.Router();
+import { addExpense, getTransactionHistory } from "./transaction.controller";
+const router = express.Router();
 
-transactionRouter.post("/add-expense", verifyAuthToken, addExpensee);
-transactionRouter.get(
-  "/transaction-history",
-  verifyAuthToken,
-  transctionHistory
-);
+router.post("/add-expense", verifyAuthToken, addExpense);
+router.get("/transaction-history", verifyAuthToken, getTransactionHistory);
 
-export default transactionRouter;
+export default router;

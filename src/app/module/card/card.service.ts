@@ -1,4 +1,4 @@
-import { TransactionDataType } from "../transaction/transaction.interface";
+import { ITransaction } from "../transaction/transaction.interface";
 import { CardDataType } from "./card.interface";
 import CardModel from "./card.model";
 
@@ -16,10 +16,7 @@ export const GetCardFromDB = async (
   return newCard;
 };
 
-export const updateCardFromDB = async (
-  bodyData: TransactionDataType,
-  type: string
-) => {
+export const updateCard = async (bodyData: ITransaction, type: string) => {
   const { userId, amount } = bodyData;
   const query = { userId };
   let update = {};

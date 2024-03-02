@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import BudgetModel from "./budget.model";
-import { TransactionDataType } from "../transaction/transaction.interface";
 import { BudgetDataType } from "./budget.interface";
+import { ITransaction } from "../transaction/transaction.interface";
 
-export const updateBudgetFromDb = async (body: TransactionDataType) => {
+export const updateBudget = async (body: ITransaction) => {
   const { userId, category, amount } = body;
 
   // Perform the query using ObjectId
