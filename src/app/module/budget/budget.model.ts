@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import mongoose from "mongoose";
+import { BudgetDataType } from "./budget.interface";
 
-const budgetTrackerSchema = new mongoose.Schema({
+const budgetTrackerSchema = new Schema<BudgetDataType>({
   userId: {
     ref: "User",
     type: Schema.Types.ObjectId,
@@ -29,6 +29,6 @@ budgetTrackerSchema.virtual("isOverLimit").get(function () {
 });
 
 // Create the model from the schema
-const BudgetModel = model("BudgetTracker", budgetTrackerSchema);
+const BudgetModel = model<BudgetDataType>("BudgetTracker", budgetTrackerSchema);
 
 export default BudgetModel;
