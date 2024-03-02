@@ -23,17 +23,8 @@ export const updateBudgetFromDb = async (body: TransactionDataType) => {
   return budget;
 };
 
-// Service for creating a budget
 export const createBudget = async (budgetData: BudgetDataType) => {
-  const { userId, category } = budgetData;
-  const query = {
-    userId,
-    category,
-  };
-  const update = { $set: budgetData };
-  const options = { upsert: true };
-
-  const budget = await BudgetModel.updateOne(query, update, options);
+  const budget = await BudgetModel.create(budgetData);
   return budget;
 };
 

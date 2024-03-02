@@ -28,6 +28,8 @@ budgetTrackerSchema.virtual("isOverLimit").get(function () {
   return this.spent > this.limit;
 });
 
+budgetTrackerSchema.index({ userId: 1, category: 1 }, { unique: true });
+
 // Create the model from the schema
 const BudgetModel = model<BudgetDataType>("BudgetTracker", budgetTrackerSchema);
 

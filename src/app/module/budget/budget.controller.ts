@@ -1,13 +1,22 @@
 import { Request, Response } from "express";
 import * as BudgetService from "./budget.service";
 
-// Controller for creating a budget
 export const createBudget = async (req: Request, res: Response) => {
   try {
-    const budget = await BudgetService.createBudget(req.body);
-    res.status(200).json(budget);
+    const result = await BudgetService.createBudget(req.body);
+    console.log(result);
+    res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error.code == 11000) {
+      {
+        return res.status(409).json({
+          error: true,
+          message: "Budget already exists",
+        });
+      }
+    }
+    // Handle other errors
+    return res.status(400).json({ error: true, message: error.message });
   }
 };
 
