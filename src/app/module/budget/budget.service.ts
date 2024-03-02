@@ -1,25 +1,24 @@
 import mongoose from "mongoose";
 import BudgetModel from "./budget.model";
+import { TransactionDataType } from "../transaction/transaction.interface";
 
-export const updateBudgetFromDb = async (userId: string) => {
-  // Convert userId string to ObjectId
-  const objectId = new mongoose.Types.ObjectId(userId);
-
-  console.log("ObjectId for userId =>", objectId);
+export const updateBudgetFromDb = async (body: TransactionDataType) => {
+  const { userId, category, amount } = body;
 
   // Perform the query using ObjectId
-  const budget = await BudgetModel.findOne({
-    userId: "65db1e13e48106cf541d49b4",
-  });
-
-  // Log the query result
-  console.log("Model response", budget);
-
-  // If null, log that no document was found
-  if (!budget) {
-    console.log("No document found for userId ObjectId:", objectId);
-  }
-
+  const budget = await BudgetModel.findOneAndUpdate(
+    {
+      userId: userId,
+      category: category,
+    },
+    {
+      $inc: {
+        spent: amount,
+        remaining: -amount,
+      },
+    }
+  );
+  console.log("budget => ", budget);
   return budget;
 };
 

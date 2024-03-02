@@ -8,7 +8,7 @@ export const addExpensee = async (req: Request, res: Response) => {
     const body = req.body;
     const transaction = [];
     // const transaction = await addTransaction(body);
-    const budget = updateBudgetFromDb(body.userId);
+    const budget = updateBudgetFromDb(body);
     return res.status(200).json({
       error: false,
       data: transaction,
