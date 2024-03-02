@@ -19,13 +19,10 @@ const budgetTrackerSchema = new Schema<BudgetDataType>({
   spent: {
     type: Number,
   },
-  remaining: {
-    type: Number,
-  },
 });
 
 budgetTrackerSchema.virtual("isOverLimit").get(function () {
-  return this.spent > this.limit;
+  return this.spent >= this.limit;
 });
 
 budgetTrackerSchema.set("toJSON", { virtuals: true });

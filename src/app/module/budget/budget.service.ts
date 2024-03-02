@@ -15,7 +15,6 @@ export const updateBudgetFromDb = async (body: TransactionDataType) => {
     {
       $inc: {
         spent: amount,
-        remaining: -amount,
       },
     }
   );
