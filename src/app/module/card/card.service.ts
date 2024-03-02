@@ -15,3 +15,24 @@ export const GetCardFromDB = async (
   const newCard = await CardModel.findOne({ userId: id });
   return newCard;
 };
+
+export const updateCardFromDB = async (
+  bodyData: TransactionDataType,
+  type: string
+) => {
+  const { userId, amount } = bodyData;
+  const query = { userId };
+  let update = {};
+
+  if (type === "expense") {
+    update = {
+      $inc: {
+        totalBalance: -amount,
+        totalExpense: amount,
+      },
+    };
+  }
+  const updatedCard = await CardModel.findOneAndUpdate(query, update);
+
+  console.log("updated card =>", updatedCard);
+};
