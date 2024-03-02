@@ -28,6 +28,9 @@ budgetTrackerSchema.virtual("isOverLimit").get(function () {
   return this.spent > this.limit;
 });
 
+budgetTrackerSchema.set("toJSON", { virtuals: true });
+budgetTrackerSchema.set("toObject", { virtuals: true });
+
 budgetTrackerSchema.index({ userId: 1, category: 1 }, { unique: true });
 
 // Create the model from the schema

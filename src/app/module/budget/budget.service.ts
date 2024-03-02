@@ -30,6 +30,7 @@ export const createBudget = async (budgetData: BudgetDataType) => {
 
 // Service for getting a budget by userId
 export const getBudgetByUserId = async (userId) => {
-  const budget = await BudgetModel.findOne({ userId });
-  return budget;
+  const budgets = await BudgetModel.find({ userId });
+
+  return budgets;
 };
