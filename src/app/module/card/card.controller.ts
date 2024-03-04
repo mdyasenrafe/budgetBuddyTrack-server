@@ -6,7 +6,7 @@ export const createCard = async (req: Request, res: Response) => {
   try {
     const cardData: ICardData = req.body;
     const newCard = await createCardInDB(cardData);
-    return res.status(201).json({
+    return res.status(200).json({
       error: false,
       data: newCard,
       message: "Card created successfully.",

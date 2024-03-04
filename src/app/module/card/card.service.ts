@@ -2,10 +2,11 @@ import { ITransaction } from "../transaction/transaction.interface";
 import { ICardData } from "./card.interface";
 import CardModel from "./card.model";
 
-export const createCardInDB = async (
-  cardData: ICardData
-): Promise<ICardData> => {
-  const newCard = await CardModel.create(cardData);
+export const createCardInDB = async (cardData: ICardData) => {
+  const query = { userId: cardData.userId };
+  const update = { $set: cardData };
+  const options = { upsert: true };
+  const newCard = await CardModel.updateOne(query, update, options);
   return newCard;
 };
 
