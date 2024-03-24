@@ -18,6 +18,7 @@ const budgetTrackerSchema = new Schema<BudgetDataType>({
   },
   spent: {
     type: Number,
+    default: 0,
   },
   createAt: {
     type: Date,
