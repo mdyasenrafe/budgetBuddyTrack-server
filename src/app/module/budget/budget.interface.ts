@@ -4,4 +4,5 @@ export interface BudgetDataType {
   limit: Number;
   spent: Number;
   remaining: Number;
+  createAt: Date;
 }
