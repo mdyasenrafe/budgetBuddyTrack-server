@@ -19,6 +19,10 @@ const budgetTrackerSchema = new Schema<BudgetDataType>({
   spent: {
     type: Number,
   },
+  createAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 budgetTrackerSchema.virtual("isOverLimit").get(function () {
