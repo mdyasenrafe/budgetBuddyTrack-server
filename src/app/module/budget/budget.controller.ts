@@ -28,7 +28,7 @@ export const getBudgetByUserId = async (req: Request, res: Response) => {
     if (!budget) {
       return res.status(404).json({ message: "Budget not found" });
     }
-    res.status(200).json(budget);
+    res.status(200).json({error: false, message: "Budget fetch successfully", data:budget});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
